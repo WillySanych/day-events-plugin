@@ -3,6 +3,7 @@ package com.willysanych.day_events_plugin.parser.impl;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -25,7 +26,7 @@ public class CalendRuParser implements Parser {
     private final String ITEMS_NET_CLASS = ".itemsNet";
     private final String TITLE_CLASS = ".title";
     private final String ANCHOR = "a";
-//    private final String HREF_ATTRIBUTE = "abs:href";
+    private final String YEAR_CLASS = ".year ";
     private final String HREF_ATTRIBUTE = "href";
 
     private Document document;
@@ -40,28 +41,34 @@ public class CalendRuParser implements Parser {
     public List<EventEntity> getEvents() {
         Element eventRootElem = document.selectFirst(ITEMS_NET_CLASS);
 
-        List<EventEntity> events = eventRootElem.children().stream().map(eventElem -> {
+        List<EventEntity> events = eventRootElem.children().stream().flatMap(eventElem -> {
             Element title = eventElem.selectFirst(TITLE_CLASS).selectFirst(ANCHOR);
+            Element year = eventElem.selectFirst(YEAR_CLASS);
+
+            if (title == null && year == null) {
+                return Stream.empty();
+            }
+
             EventEntity event = new EventEntity();
-            event.setTitle(title.text());
-            event.setLink(title.attr(HREF_ATTRIBUTE));
-            return event;
+            if (title != null) {
+                event.setTitle(title.text());
+                event.setLink(title.attr(HREF_ATTRIBUTE));
+            }
+            if (year != null) {
+                event.setYear(year.text());
+            }
+
+            logger.debug(event.toString());
+
+            return Stream.of(event);
         }).toList();
 
-        System.out.println(events.toString());
         return events;
-//        List<EventEntity> events = new ArrayList<EventEntity>();
-//        for (Element eventElem : eventRootElem.children()) {
-//            Element title = eventElem.selectFirst(TITLE_CLASS).selectFirst(ANCHOR);
-//            EventEntity event = new EventEntity();
-//            event.setTitle(title.text());
-//            event.setLink(title.attr(HREF_ATTRIBUTE));
-//            events.add(event);
-//        }
     }
 
     private void loadDocument() {
         String url = formatUrl();
+        logger.debug(url);
 
         try {
             document = Jsoup.connect(url).get();

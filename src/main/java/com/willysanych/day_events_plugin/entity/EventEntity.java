@@ -8,6 +8,7 @@ public class EventEntity {
 
     private String title;
     private String link;
+    private String year;
 
     public String getTitle() {
         return title;
@@ -25,8 +26,16 @@ public class EventEntity {
         this.link = link;
     }
 
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
     @Override
     public String toString() {
-        return "EventEntity [title=" + title + ", link=" + link + "]";
+        return "EventEntity [title=" + title + ", link=" + link + ", year=" + year + "]";
     }
 }

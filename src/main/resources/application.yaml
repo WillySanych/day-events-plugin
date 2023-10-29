@@ -3,3 +3,7 @@ server:
 
 parser:
   baseUrl: "https://www.calend.ru/events/"
+
+logging:
+  level:
+    com.willysanych.day_events_plugin: DEBUG
