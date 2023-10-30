@@ -1,0 +1,15 @@
+server:
+  port: PORT
+
+parser:
+  baseUrl: BASE_URL
+
+katya:
+  url: URL
+  message-type: MARKDOWN
+  chats: CHATS
+  token: TOKEN
+
+logging:
+  level:
+    com.willysanych.day_events_plugin: DEBUG

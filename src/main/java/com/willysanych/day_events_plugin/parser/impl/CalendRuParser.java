@@ -15,10 +15,10 @@ import org.springframework.stereotype.Service;
 
 import com.willysanych.day_events_plugin.entity.EventEntity;
 import com.willysanych.day_events_plugin.exception.ParseException;
-import com.willysanych.day_events_plugin.parser.Parser;
+import com.willysanych.day_events_plugin.parser.EventsParser;
 
 @Service
-public class CalendRuParser implements Parser {
+public class CalendRuParser implements EventsParser {
 
     Logger logger = LoggerFactory.getLogger(CalendRuParser.class);
 
@@ -29,16 +29,31 @@ public class CalendRuParser implements Parser {
     private final String YEAR_CLASS = ".year ";
     private final String HREF_ATTRIBUTE = "href";
 
-    private Document document;
     private String baseUrl;
+    private Document document;
+    private List<EventEntity> events;
 
-    public CalendRuParser(@Value("${parser.baseUrl}") String url) {
-        this.baseUrl = url;
-        loadDocument();
-        getEvents();
+    public CalendRuParser(@Value("${parser.baseUrl}") String baseUrl) {
+        this.baseUrl = baseUrl;
+        loadAndParseEvents();
     }
 
+    @Override
     public List<EventEntity> getEvents() {
+        return events;
+    }
+
+    //TODO make scheduled
+    private void loadAndParseEvents() {
+        loadDocument();
+        parseEvents();
+    }
+
+    private void parseEvents() {
+        if (document == null) {
+            return;
+        }
+
         Element eventRootElem = document.selectFirst(ITEMS_NET_CLASS);
 
         List<EventEntity> events = eventRootElem.children().stream().flatMap(eventElem -> {
@@ -63,7 +78,7 @@ public class CalendRuParser implements Parser {
             return Stream.of(event);
         }).toList();
 
-        return events;
+        this.events = events;
     }
 
     private void loadDocument() {
