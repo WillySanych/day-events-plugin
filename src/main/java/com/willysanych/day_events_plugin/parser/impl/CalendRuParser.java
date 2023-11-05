@@ -1,7 +1,7 @@
 package com.willysanych.day_events_plugin.parser.impl;
 
 import java.io.IOException;
-import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -93,9 +93,9 @@ public class CalendRuParser implements EventsParser {
     }
 
     private String formatUrl() {
-        LocalDate date = LocalDate.now();
-        int month = date.getMonthValue();
-        int day = date.getDayOfMonth();
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
 
         StringBuilder url = new StringBuilder()
                 .append(baseUrl)

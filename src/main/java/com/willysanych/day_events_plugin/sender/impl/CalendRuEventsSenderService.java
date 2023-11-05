@@ -31,7 +31,7 @@ public class CalendRuEventsSenderService implements EventsSenderService {
         this.eventsSender = eventsSender;
     }
 
-    //TODO make scheduled
+    // TODO make scheduled
     @Override
     public void sendEventsToKatya() {
         logger.debug("Sending to chats:" + chats.toString());
