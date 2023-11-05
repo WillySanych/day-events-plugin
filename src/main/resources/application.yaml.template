@@ -16,6 +16,7 @@ logging:
 
 scheduler:
   enabled: false
+  timezone: Europe/Moscow
   load-events:
     cron: CRON-EXPRESSION
   send-events:
@@ -24,3 +25,8 @@ scheduler:
 debug-mode: false
 
 locale: ru
+
+day-off:
+  url: URL
+  timezone: Europe/Moscow
+  country: ru

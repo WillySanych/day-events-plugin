@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.willysanych.day_events_plugin.dto.EventDto;
 import com.willysanych.day_events_plugin.service.converter.EventsConverter;
+import com.willysanych.day_events_plugin.service.day_off.DayOffService;
 import com.willysanych.day_events_plugin.service.sender.EventsSenderClient;
 import com.willysanych.day_events_plugin.service.sender.EventsSenderService;
 
@@ -20,6 +21,7 @@ public class CalendRuEventsSenderService implements EventsSenderService {
 
     private final EventsConverter eventsConverter;
     private final EventsSenderClient eventsSender;
+    private final DayOffService dayOffService;
 
     @Value("${katya.message-type}")
     private String messageType;
@@ -27,14 +29,19 @@ public class CalendRuEventsSenderService implements EventsSenderService {
     @Value("#{'${katya.chats}'.split(',')}")
     private List<String> chats;
 
-    public CalendRuEventsSenderService(EventsConverter eventsConverter, EventsSenderClient eventsSender) {
+    public CalendRuEventsSenderService(EventsConverter eventsConverter, EventsSenderClient eventsSender, DayOffService dayOffService) {
         this.eventsConverter = eventsConverter;
         this.eventsSender = eventsSender;
+        this.dayOffService = dayOffService;
     }
 
     @Scheduled(cron = "${scheduler.send-events.cron}", zone = "${scheduler.timezone}")
     @Override
     public void sendEventsToKatya() {
+        if (dayOffService.checkDayOffToday()) {
+            return;
+        }
+
         logger.debug("Sending to chats:" + chats.toString());
         for (String chat : chats) {
             EventDto dto = getEventDto(chat);

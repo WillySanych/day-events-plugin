@@ -17,13 +17,13 @@ import org.springframework.stereotype.Service;
 import com.willysanych.day_events_plugin.entity.EventEntity;
 import com.willysanych.day_events_plugin.exception.ParseException;
 import com.willysanych.day_events_plugin.service.parser.EventsParser;
+import com.willysanych.day_events_plugin.util.StringUtils;
 
 @Service
-public class CalendRuParser implements EventsParser {
+public class CalendRuEventsParser implements EventsParser {
 
-    Logger logger = LoggerFactory.getLogger(CalendRuParser.class);
+    Logger logger = LoggerFactory.getLogger(CalendRuEventsParser.class);
 
-    private final String STRING_DASH = "-";
     private final String ITEMS_NET_CLASS = ".itemsNet";
     private final String TITLE_CLASS = ".title";
     private final String ANCHOR = "a";
@@ -34,7 +34,7 @@ public class CalendRuParser implements EventsParser {
     private Document document;
     private List<EventEntity> events;
 
-    public CalendRuParser(@Value("${parser.baseUrl}") String baseUrl) {
+    public CalendRuEventsParser(@Value("${parser.baseUrl}") String baseUrl) {
         this.baseUrl = baseUrl;
         loadAndParseEvents();
     }
@@ -101,8 +101,9 @@ public class CalendRuParser implements EventsParser {
 
         StringBuilder url = new StringBuilder()
                 .append(baseUrl)
+                .append(StringUtils.SLASH)
                 .append(month)
-                .append(STRING_DASH)
+                .append(StringUtils.DASH)
                 .append(day);
 
         return url.toString();
