@@ -18,9 +18,11 @@ public class CalendRuEventsConverter implements EventsConverter {
     private final String BRACKET_CLOSE = ")";
     private final String SPACE = " ";
     private final String DOT = ".";
-    private final String UNLINE_URL_MD = "[link]";
+    private final String SQUARE_BRACKET_OPEN = "[";
+    private final String SQUARE_BRACKET_CLOSE = "]";
     private final String NEWLINE = "\n";
-    private final String BASE_HEADER_MESSAGE = "events.header.message";
+    private final String BASE_HEADER_MESSAGE = "events.header";
+    private final String EVENTS_LINK_MESSAGE = "events.link";
 
     private final EventsParser parser;
     private final MessageUtil messageUtil;
@@ -88,7 +90,9 @@ public class CalendRuEventsConverter implements EventsConverter {
 
     private void appendLink(StringBuilder sb, EventEntity event) {
         sb.append(BRACKET_OPEN);
-        sb.append(UNLINE_URL_MD);
+        sb.append(SQUARE_BRACKET_OPEN);
+        sb.append(messageUtil.getLocalizedMessage(EVENTS_LINK_MESSAGE, null));
+        sb.append(SQUARE_BRACKET_CLOSE);
         sb.append(BRACKET_OPEN);
         sb.append(event.getLink());
         sb.append(BRACKET_CLOSE);

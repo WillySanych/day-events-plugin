@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.willysanych.day_events_plugin.dto.EventDto;
@@ -31,7 +32,7 @@ public class CalendRuEventsSenderService implements EventsSenderService {
         this.eventsSender = eventsSender;
     }
 
-    // TODO make scheduled
+    @Scheduled(cron = "${scheduler.send-events.cron}", zone = "${scheduler.timezone}")
     @Override
     public void sendEventsToKatya() {
         logger.debug("Sending to chats:" + chats.toString());
@@ -39,8 +40,9 @@ public class CalendRuEventsSenderService implements EventsSenderService {
             EventDto dto = getEventDto(chat);
 
             eventsSender.sendEvents(dto);
+            logger.debug("Successfully sent to chat: " + chat);
         }
-        logger.debug("Sending completed");
+        logger.debug("Sending to all chats completed");
     }
 
     private EventDto getEventDto(String chat) {

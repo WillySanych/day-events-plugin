@@ -13,3 +13,14 @@ katya:
 logging:
   level:
     com.willysanych.day_events_plugin: DEBUG
+
+scheduler:
+  enabled: false
+  load-events:
+    cron: CRON-EXPRESSION
+  send-events:
+    cron: CRON-EXPRESSION
+
+debug-mode: false
+
+locale: ru

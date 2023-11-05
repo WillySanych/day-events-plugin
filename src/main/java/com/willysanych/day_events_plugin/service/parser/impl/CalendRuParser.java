@@ -11,6 +11,7 @@ import org.jsoup.nodes.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.willysanych.day_events_plugin.entity.EventEntity;
@@ -38,15 +39,15 @@ public class CalendRuParser implements EventsParser {
         loadAndParseEvents();
     }
 
-    @Override
-    public List<EventEntity> getEvents() {
-        return events;
-    }
-
-    //TODO make scheduled
+    @Scheduled(cron = "${scheduler.load-events.cron}", zone = "${scheduler.timezone}")
     private void loadAndParseEvents() {
         loadDocument();
         parseEvents();
+    }
+
+    @Override
+    public List<EventEntity> getEvents() {
+        return events;
     }
 
     private void parseEvents() {
@@ -83,10 +84,11 @@ public class CalendRuParser implements EventsParser {
 
     private void loadDocument() {
         String url = formatUrl();
-        logger.debug(url);
 
         try {
+            logger.debug("Started loading document from page: " + url);
             document = Jsoup.connect(url).get();
+            logger.debug("Document loaded successful");
         } catch (IOException e) {
             throw new ParseException("Unable to load page for parsing");
         }
