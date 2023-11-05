@@ -1,4 +1,4 @@
-package com.willysanych.day_events_plugin.converter.impl;
+package com.willysanych.day_events_plugin.service.converter.impl;
 
 import java.util.Calendar;
 import java.util.List;
@@ -6,9 +6,9 @@ import java.util.List;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.willysanych.day_events_plugin.converter.EventsConverter;
 import com.willysanych.day_events_plugin.entity.EventEntity;
-import com.willysanych.day_events_plugin.parser.EventsParser;
+import com.willysanych.day_events_plugin.service.converter.EventsConverter;
+import com.willysanych.day_events_plugin.service.parser.EventsParser;
 import com.willysanych.day_events_plugin.util.MessageUtil;
 
 @Service

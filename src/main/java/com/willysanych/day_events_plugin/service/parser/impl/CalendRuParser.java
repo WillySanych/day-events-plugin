@@ -1,4 +1,4 @@
-package com.willysanych.day_events_plugin.parser.impl;
+package com.willysanych.day_events_plugin.service.parser.impl;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.willysanych.day_events_plugin.entity.EventEntity;
 import com.willysanych.day_events_plugin.exception.ParseException;
-import com.willysanych.day_events_plugin.parser.EventsParser;
+import com.willysanych.day_events_plugin.service.parser.EventsParser;
 
 @Service
 public class CalendRuParser implements EventsParser {

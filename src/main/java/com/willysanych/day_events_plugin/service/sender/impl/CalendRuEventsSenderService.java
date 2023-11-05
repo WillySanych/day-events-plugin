@@ -1,4 +1,4 @@
-package com.willysanych.day_events_plugin.sender.impl;
+package com.willysanych.day_events_plugin.service.sender.impl;
 
 import java.util.List;
 
@@ -7,10 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.willysanych.day_events_plugin.converter.EventsConverter;
 import com.willysanych.day_events_plugin.dto.EventDto;
-import com.willysanych.day_events_plugin.sender.EventsSenderClient;
-import com.willysanych.day_events_plugin.sender.EventsSenderService;
+import com.willysanych.day_events_plugin.service.converter.EventsConverter;
+import com.willysanych.day_events_plugin.service.sender.EventsSenderClient;
+import com.willysanych.day_events_plugin.service.sender.EventsSenderService;
 
 @Service
 public class CalendRuEventsSenderService implements EventsSenderService {

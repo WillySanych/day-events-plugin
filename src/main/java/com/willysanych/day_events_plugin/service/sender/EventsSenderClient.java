@@ -1,4 +1,4 @@
-package com.willysanych.day_events_plugin.sender;
+package com.willysanych.day_events_plugin.service.sender;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.service.annotation.PostExchange;

@@ -1,4 +1,4 @@
-package com.willysanych.day_events_plugin.parser;
+package com.willysanych.day_events_plugin.service.parser;
 
 import java.util.List;
 

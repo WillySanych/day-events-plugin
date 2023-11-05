@@ -8,7 +8,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.support.WebClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
-import com.willysanych.day_events_plugin.sender.EventsSenderClient;
+import com.willysanych.day_events_plugin.service.sender.EventsSenderClient;
 
 @Configuration
 public class WebClientConfig {
