@@ -3,7 +3,6 @@ package com.willysanych.day_events_plugin.service.converter.impl;
 import java.util.Calendar;
 import java.util.List;
 
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.willysanych.day_events_plugin.entity.EventEntity;
@@ -11,6 +10,7 @@ import com.willysanych.day_events_plugin.service.converter.EventsConverter;
 import com.willysanych.day_events_plugin.service.parser.EventsParser;
 import com.willysanych.day_events_plugin.util.MessageUtil;
 import com.willysanych.day_events_plugin.util.StringUtils;
+import com.willysanych.day_events_plugin.util.locale.LocaleUtil;
 
 @Service
 public class CalendRuEventsConverter implements EventsConverter {
@@ -20,10 +20,12 @@ public class CalendRuEventsConverter implements EventsConverter {
 
     private final EventsParser parser;
     private final MessageUtil messageUtil;
+    private final LocaleUtil localeUtil;
 
-    public CalendRuEventsConverter(EventsParser parser, MessageUtil messageUtil) {
+    public CalendRuEventsConverter(EventsParser parser, MessageUtil messageUtil, LocaleUtil localeUtil) {
         this.parser = parser;
         this.messageUtil = messageUtil;
+        this.localeUtil = localeUtil;
     }
 
     @Override
@@ -57,8 +59,7 @@ public class CalendRuEventsConverter implements EventsConverter {
 
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        String monthName = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG_FORMAT,
-                LocaleContextHolder.getLocale());
+        String monthName = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG_FORMAT, localeUtil.getLocale());
 
         Object[] args = new Object[] { day, monthName };
         String baseMessage = messageUtil.getLocalizedMessage(BASE_HEADER_MESSAGE, args);

@@ -1,23 +1,22 @@
 package com.willysanych.day_events_plugin.util;
 
-import java.util.Locale;
-
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+import com.willysanych.day_events_plugin.util.locale.LocaleUtil;
+
+@Component
 public class MessageUtil {
 
     private final MessageSource messageSource;
-    private final Locale locale;
+    private final LocaleUtil localeUtil;
 
-    public MessageUtil(MessageSource messageSource, @Value("${locale}") String localeName) {
+    public MessageUtil(MessageSource messageSource, LocaleUtil localeUtil) {
         this.messageSource = messageSource;
-        this.locale = new Locale(localeName);
+        this.localeUtil = localeUtil;
     }
 
     public String getLocalizedMessage(String key, Object[] args) {
-        return messageSource.getMessage(key, args, locale);
+        return messageSource.getMessage(key, args, localeUtil.getLocale());
     }
 }
