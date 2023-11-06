@@ -34,3 +34,4 @@ build/
 
 ### Project ###
 application.yaml
+application-prod.yaml

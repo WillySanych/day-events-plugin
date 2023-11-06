@@ -24,12 +24,17 @@ public class IsDayOffService implements DayOffService {
     @Override
     public boolean checkDayOffToday() {
         String dayCode = dayOffClient.checkDayOffToday(timezoneParam, countryParam);
-        DayType type = DayType.getByCode(Integer.valueOf(dayCode));
+        DayType type = DayType.UNKNOWN;
+
+        try {
+            type = DayType.getByCode(Integer.valueOf(dayCode));
+        } catch (NumberFormatException e) {
+            throw new DayOffException("Unable to parse day code from external service");
+        }
 
         switch (type) {
-        case WORK_DAY: 
+        case WORK_DAY:
             return false;
-        
         case NON_WORKING_DAY:
             return true;
         default:

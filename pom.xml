@@ -10,12 +10,14 @@
     </parent>
     <groupId>com.willysanych</groupId>
     <artifactId>day-events-plugin</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>day-events-plugin</name>
     <description>Day events plugin for Katya TG bot</description>
+
     <properties>
         <java.version>17</java.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

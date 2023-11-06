@@ -50,6 +50,18 @@ public class CalendRuEventsParser implements EventsParser {
         return events;
     }
 
+    private void loadDocument() {
+        String url = formatUrl();
+
+        try {
+            logger.debug("Started loading document from page: " + url);
+            document = Jsoup.connect(url).get();
+            logger.debug("Document loaded successful");
+        } catch (IOException e) {
+            throw new ParseException("Unable to load page for parsing");
+        }
+    }
+
     private void parseEvents() {
         if (document == null) {
             return;
@@ -80,18 +92,6 @@ public class CalendRuEventsParser implements EventsParser {
         }).toList();
 
         this.events = events;
-    }
-
-    private void loadDocument() {
-        String url = formatUrl();
-
-        try {
-            logger.debug("Started loading document from page: " + url);
-            document = Jsoup.connect(url).get();
-            logger.debug("Document loaded successful");
-        } catch (IOException e) {
-            throw new ParseException("Unable to load page for parsing");
-        }
     }
 
     private String formatUrl() {
