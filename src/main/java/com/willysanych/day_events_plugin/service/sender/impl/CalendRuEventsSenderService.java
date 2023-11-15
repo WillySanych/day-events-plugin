@@ -58,6 +58,7 @@ public class CalendRuEventsSenderService implements EventsSenderService {
         dto.setMessage(eventsConverter.getMessage());
         dto.setType(messageType);
         dto.setChatName(chat);
+        dto.setDisableWebPagePreview(true);
 
         return dto;
     }

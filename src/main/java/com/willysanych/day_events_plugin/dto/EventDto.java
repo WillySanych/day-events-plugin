@@ -5,6 +5,7 @@ public class EventDto {
     private String message;
     private String chatName;
     private String type;
+    private boolean disableWebPagePreview;
 
     public String getMessage() {
         return message;
@@ -28,5 +29,13 @@ public class EventDto {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public boolean isDisableWebPagePreview() {
+        return disableWebPagePreview;
+    }
+
+    public void setDisableWebPagePreview(boolean disableWebPagePreview) {
+        this.disableWebPagePreview = disableWebPagePreview;
     }
 }
