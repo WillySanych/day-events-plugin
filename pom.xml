@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.willysanych</groupId>
     <artifactId>day-events-plugin</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <name>day-events-plugin</name>
     <description>Day events plugin for Katya TG bot</description>
 
