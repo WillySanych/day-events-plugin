@@ -17,6 +17,7 @@ public class CalendRuEventsConverter implements EventsConverter {
 
     private final String BASE_HEADER_MESSAGE = "events.header";
     private final String EVENTS_LINK_MESSAGE = "events.link";
+    private final String EVENTS_ERROR_MESSAGE = "events.error";
 
     private final EventsParser parser;
     private final MessageUtil messageUtil;
@@ -31,8 +32,13 @@ public class CalendRuEventsConverter implements EventsConverter {
     @Override
     public String getMessage() {
         List<EventEntity> events = parser.getEvents();
-
         StringBuilder message = new StringBuilder();
+
+        if (events == null) {
+            message.append(messageUtil.getLocalizedMessage(EVENTS_ERROR_MESSAGE, null));
+            return message.toString();
+        }
+
         message.append(getMessageHeader());
         message.append(StringUtils.NEWLINE);
 
@@ -64,8 +70,7 @@ public class CalendRuEventsConverter implements EventsConverter {
         Object[] args = new Object[] { day, monthName };
         String baseMessage = messageUtil.getLocalizedMessage(BASE_HEADER_MESSAGE, args);
 
-        String message = String.format(baseMessage, day, monthName);
-        return message;
+        return String.format(baseMessage, day, monthName);
     }
 
     private void appendIndex(StringBuilder sb, int i) {

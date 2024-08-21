@@ -41,12 +41,17 @@ public class CalendRuEventsParser implements EventsParser {
 
     @Scheduled(cron = "${scheduler.load-events.cron}", zone = "${scheduler.timezone}")
     private void loadAndParseEvents() {
+        events = null;
         loadDocument();
         parseEvents();
     }
 
     @Override
     public List<EventEntity> getEvents() {
+        if (events == null) {
+            loadDocument();
+            parseEvents();
+        }
         return events;
     }
 
@@ -54,7 +59,7 @@ public class CalendRuEventsParser implements EventsParser {
         String url = formatUrl();
 
         try {
-            logger.debug("Started loading document from page: " + url);
+            logger.debug("Started loading document from page: {}", url);
             document = Jsoup.connect(url).get();
             logger.debug("Document loaded successful");
         } catch (IOException e) {
